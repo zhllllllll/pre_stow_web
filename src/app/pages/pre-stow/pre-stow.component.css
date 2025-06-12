@@ -1,0 +1,30 @@
+
+/* 表格列调整相关样式 */
+.ant-table th {
+  position: relative;
+  user-select: none;
+}
+
+.resize-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+  background: transparent;
+  z-index: 1;
+}
+
+.resize-handle:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* 调整时的视觉反馈 */
+.resizing {
+  cursor: col-resize;
+}
+
+.resizing * {
+  cursor: col-resize !important;
+}

@@ -1,0 +1,13 @@
+.bay-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px; /* 列之间的间距 */
+  padding: 10px;
+}
+.bay-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  /* 移除margin-right，因为现在是垂直布局 */
+}
