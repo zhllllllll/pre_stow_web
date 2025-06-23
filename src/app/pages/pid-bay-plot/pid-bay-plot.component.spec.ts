@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PreStowComponent } from './pre-stow.component';
+import { PidBayPlotComponent } from './pid-bay-plot.component';
 
-describe('PreStowComponent', () => {
-  let component: PreStowComponent;
-  let fixture: ComponentFixture<PreStowComponent>;
+describe('PidBayPlotComponent', () => {
+  let component: PidBayPlotComponent;
+  let fixture: ComponentFixture<PidBayPlotComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PreStowComponent]
+      imports: [PidBayPlotComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PreStowComponent);
+    fixture = TestBed.createComponent(PidBayPlotComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

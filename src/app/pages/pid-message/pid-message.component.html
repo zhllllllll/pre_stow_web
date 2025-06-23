@@ -1,0 +1,51 @@
+<nz-input-group nzSearch nzSize="large">
+  <input
+    type="text"
+    nz-input
+    placeholder="请输入预配id"
+    [formControl]="pIdInput"
+    (input)="pIdSearch(pIdInput)"
+  />
+</nz-input-group>
+<nz-alert
+  *ngIf="isError && error.length != 0"
+  nzType="error"
+  [nzMessage]="error"
+  nzShowIcon
+></nz-alert>
+<nz-spin [nzSpinning]="isPIDTableLoading" nzTip="正在加载...">
+  <nz-table
+    #basicTable
+    [nzData]="pIdList"
+    [nzTotal]="pIdCount"
+    [nzFrontPagination]="false"
+    [(nzPageSize)]="pIdPageSize"
+    [(nzPageIndex)]="pIdPageIndex"
+    (nzPageIndexChange)="onPIdPageIndexChange()"
+    (nzPageSizeChange)="onPIdPageSizeChange()"
+    [nzShowTotal]="pidtotalTemplate"
+    nzShowPagination
+    nzShowSizeChanger
+    [nzPageSizeOptions]="[5, 10, 20, 30, 50, 100, 200]"
+  >
+    <thead>
+      <tr>
+        <th>预配id</th>
+        <th>数量</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of pIdList">
+        <td><a routerLink='/pidBayPlot' [queryParams]="{pid:data.p_id}" >{{ data.p_id }}</a></td>
+        <td>{{ data.count }}</td>
+        <td>
+          <!-- 删除接口还没写 -->
+          <a href="">删除</a>
+
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+<ng-template #pidtotalTemplate let-total>共{{ pIdCount }}</ng-template>

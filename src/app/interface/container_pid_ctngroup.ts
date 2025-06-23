@@ -45,6 +45,9 @@ export interface pIdList {
   p_id: string;
   count: number;
 }
+export interface pIdAllList{
+  p_id_list: pIdList[];
+}
 export interface ctnGroupList {
   ctn_group: string;
 }

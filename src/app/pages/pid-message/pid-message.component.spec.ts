@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BayPlotComponent } from './bay-plot.component';
+import { PIDMessageComponent } from './pid-message.component';
 
-describe('BayPlotComponent', () => {
-  let component: BayPlotComponent;
-  let fixture: ComponentFixture<BayPlotComponent>;
+describe('PIDMessageComponent', () => {
+  let component: PIDMessageComponent;
+  let fixture: ComponentFixture<PIDMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BayPlotComponent]
+      imports: [PIDMessageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(BayPlotComponent);
+    fixture = TestBed.createComponent(PIDMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

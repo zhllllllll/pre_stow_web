@@ -1,0 +1,106 @@
+<nz-alert
+  *ngIf="isError && error.length != 0"
+  nzType="error"
+  [nzMessage]="error"
+  nzShowIcon
+></nz-alert>
+<button  nz-button nzType="primary" (click)="drawerShow()">展示船贝图</button>
+<nz-drawer
+  nzWidth="1000px"
+  [nzVisible]="drawerVisible"
+  nzPlacement="right"
+  [nzTitle]="title"
+  (nzOnClose)="drawerClose()"
+>
+  <ng-container *nzDrawerContent>
+    <div>
+      <nz-segmented
+        [nzOptions]="options"
+        (nzValueChange)="handleValueChange($event)"
+      ></nz-segmented>
+    </div>
+    <div>
+      <nz-card>
+        <span *ngFor="let item of podColorDict | keyvalue"
+          ><nz-tag [nzColor]="item.value">{{ item.key }}</nz-tag></span
+        >
+      </nz-card>
+    </div>
+    <div class="bay-container">
+      <div *ngFor="let vesselBay of vesselBayDatas; let i = index">
+        <div class="bay-group" *ngFor="let bay of vesselBay">
+          <app-vessel-bay
+            [vesselBayData]="bay"
+            [fillContainer]="fillVesselBayContainer"
+            [textContainer]="textVesselBayContainer"
+            (vescellDbClick)="onVesselBayDbClick($event)"
+          >
+          </app-vessel-bay>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <nz-modal
+    [(nzVisible)]="isVesCellVisible"
+    [nzMask]="false"
+    [nzDraggable]="true"
+    [nzTitle]="vesCell?.vescell"
+    nzWidth="200px"
+    (nzOnCancel)="handleVesCellCancel()"
+    [nzFooter]="null"
+  >
+    <ng-container *nzModalContent>
+      <p>集装箱ID:{{ vesCell?.data.containerID || "——" }}</p>
+      <p>装卸类型：{{ vesCell?.data.equipType || "——" }}</p>
+      <p>ifOnly:{{ vesCell?.data.ifOnly ? "是" : "否" }}</p>
+      <p>ifX:{{ vesCell?.data.ifX ? "是" : "否" }}</p>
+      <p>卸货港:{{ vesCell?.data.ctn_group.slice(0, 5) || "——" }}</p>
+      <p>箱组:{{ vesCell?.data.ctn_group || "——" }}</p>
+    </ng-container>
+  </nz-modal>
+</nz-drawer>
+<nz-spin [nzSpinning]="isCtnMesLoading" nzTip="正在加载...">
+  <nz-table
+    #basicTable
+    [nzData]="ctnList"
+    [nzTotal]="ctnCount"
+    [nzFrontPagination]="false"
+    [(nzPageSize)]="ctnPageSize"
+    [(nzPageIndex)]="ctnPageIndex"
+    (nzPageIndexChange)="onCtnPageIndexChange()"
+    (nzPageSizeChange)="onCtnPageSizeChange()"
+    [nzShowTotal]="pidtotalTemplate"
+    nzShowPagination
+    nzShowSizeChanger
+    [nzPageSizeOptions]="[5, 10, 20, 30, 50, 100, 200]"
+  >
+    <thead>
+      <tr>
+        <th>船箱位</th>
+        <th>箱组信息</th>
+        <th>箱尺寸</th>
+        <th>箱高</th>
+        <th>箱状态</th>
+        <th>卸货港</th>
+        <th>工作贝位</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of ctnList">
+        <td>{{ data.ves_cell }}</td>
+        <td>{{ data.ctn_group }}</td>
+        <td>{{ data.ctn_size }}</td>
+        <td>{{ data.ctn_height }}</td>
+        <td>{{ data.ctn_status }}</td>
+        <td>{{ data.pod }}</td>
+        <td>{{ data.cell_work_bay }}</td>
+        <td>
+          <!-- 删除接口还没写 -->
+          <a href="">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-spin>
+<ng-template #pidtotalTemplate let-total>共{{ ctnCount }}</ng-template>
