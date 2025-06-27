@@ -1,9 +1,7 @@
 import { ShareFunctionService } from './../../service/share-function.service';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { CommonModule, SlicePipe } from '@angular/common';
-import { Vescell, VesselBayComponent } from '@smuport/ngx-port-v';
-import { VesselBay } from '@smuport/ngx-port-v';
-import { ResizableColumnDirective } from '../../directive/resize-table.driective';
+import { Component, DestroyRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {  VesselBayComponent } from '@smuport/ngx-port-v';
 import {
   BehaviorSubject,
   combineLatest,
@@ -15,7 +13,7 @@ import {
   of,
   debounce,
 } from 'rxjs';
-import { pIdList, ctnGroupList, pIdAllList } from '../../interface/container_pid_ctngroup';
+import { pIdList } from '../../interface/container_pid_ctngroup';
 import { PreStorageServiceService } from '../../service/pre-storage-service.service';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
@@ -25,22 +23,21 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
+// 添加这一行
+import { FormsModule } from '@angular/forms';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import containerTypeStyles, {
-  generateColor,
-} from '../../service/choose-color-mode';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-pid-message',
   imports: [
     CommonModule,
-    VesselBayComponent,
     NzModalModule,
     NzSpinModule,
     NzAlertModule,
@@ -48,12 +45,15 @@ import { RouterModule } from '@angular/router';
     NzSpaceModule,
     NzButtonModule,
     ReactiveFormsModule,
+    // 添加这一行
+    FormsModule,
     NzTableModule,
     NzInputModule,
     NzSegmentedModule,
     NzCardModule,
     NzTagModule,
-    RouterModule
+    RouterModule,
+    NzSelectModule
   ],
   templateUrl: './pid-message.component.html',
   styleUrl: './pid-message.component.css',
@@ -73,7 +73,7 @@ export class PIDMessageComponent {
       timeRef$,
     ])
       .pipe(
-        takeUntilDestroyed(destoryRef),
+        takeUntilDestroyed(this.destoryRef),
         switchMap(([input, index, size]) => {
           this.pIdPageSize = size;
           console.log('pidcombineLatest triggered:', { input, index, size });

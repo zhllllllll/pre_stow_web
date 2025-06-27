@@ -24,9 +24,11 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { VesselBayComponent } from '@smuport/ngx-port-v';
 import { NzModalComponent } from 'ng-zorro-antd/modal';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import containerTypeStyles, {
   generateColor,
 } from '../../service/choose-color-mode';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-pid-bay-plot',
@@ -42,6 +44,9 @@ import containerTypeStyles, {
     VesselBayComponent,
     NzModalComponent,
     NzModalModule,
+    NzButtonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './pid-bay-plot.component.html',
   styleUrl: './pid-bay-plot.component.css',
@@ -117,6 +122,11 @@ export class PidBayPlotComponent implements OnInit {
           this.ShareFunctionService.resloveErrorCase(error);
         }
       );
+    this.service.preStowCtnGetAll(this.pidId).subscribe((r) => {
+      this.vesselBayDatas = r.real_final_result;
+      // console.log(this.vesselBayDatas)
+      this.ctnGroupList = r.ctn_group_list;
+    });
   }
 
   ngOnInit(): void {}
@@ -129,11 +139,6 @@ export class PidBayPlotComponent implements OnInit {
   //控制drawer
   drawerShow(): void {
     this.drawerVisible = true;
-    this.service.preStowCtnGetAll(this.pidId).subscribe((r) => {
-      this.vesselBayDatas = r.real_final_result;
-      // console.log(this.vesselBayDatas)
-      this.ctnGroupList = r.ctn_group_list;
-    });
   }
   drawerClose() {
     this.drawerVisible = false;
